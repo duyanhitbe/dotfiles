@@ -1,0 +1,103 @@
+# Internal
+alias e='exit'
+alias c='clear'
+alias myip="ifconfig | grep -o '192\.168\.68\.[0-9]\+' | grep -v '192\.168\.68\.255'"
+alias mobile_service="echo 'http://$(myip):4301'"
+alias n="nvim"
+alias ls="eza --icons=always"
+alias cd="z"
+
+function load() {
+    set -a
+    source $1
+    set +a
+}
+
+function nvr_open() {
+    if [ -z "$NVIM" ]; then
+      echo "No NVIM server found. Are you running inside Neovim?"
+      exit 1
+    fi
+
+    nvr --servername "$NVIM" --remote "$@"
+}
+
+# JQ
+function j2q() {
+  echo "$1" | jq -r 'to_entries | map("\(.key)=\(.value|@uri)") | join("&")'
+}
+
+function q2j() {
+  echo "$1" | awk -F '[=&]' '{
+       printf "{";
+       for (i=1; i<=NF; i+=2) {
+         if (i>1) printf ",";
+         printf "\"%s\":\"%s\"", $i, $(i+1);
+       }
+       printf "}\n";
+     }' | sed 's/+/ /g' | jq .
+}
+
+# Nodejs
+alias pn='pnpm'
+alias now='node -e "console.log(new Date().toISOString())"'
+alias tsgo='/Users/doba/typescript-go/built/local/tsgo'
+
+function index_ts() {
+  # Check if directory is provided
+  if [ -z "$1" ]; then
+    echo "Usage: export_files <directory>"
+    return 1
+  fi
+
+  # Check if directory exists
+  if [ ! -d "$1" ]; then
+    echo "Error: Directory '$1' does not exist."
+    return 1
+  fi
+
+  # Collect all file names and format them
+  find "$1" -type f \( -name '*.ts' -o -name '*.tsx' \) -not -name 'index.ts' | while read -r filepath; do
+    # Get the relative path by stripping the base directory
+    relative_path="${filepath#$1/}" # Removes the base directory path from the file path
+    # Remove the extension and output the desired pattern
+    echo "export * from './${relative_path%.*}';"
+  done
+
+}
+
+# Docker
+alias dp='docker ps'
+alias di='docker images'
+alias dr='docker rm'
+alias dri='docker rmi'
+alias lzd='lazydocker'
+alias dcu='docker compose up -d --build'
+alias dcd='docker compose down'
+
+# Git
+alias g='git'
+alias gp='git push'
+alias gpt='git push --tag'
+alias gpl='git pull'
+alias gc='git checkout'
+alias gb='git branch'
+alias gf='~/projects/CLI/gf/gf.sh'
+
+function gnp() {
+  local lt=$(version=$(git lt); major=$(echo "$version" | sed -E 's/^v([0-9]+)\..*/\1/'); minor=$(echo "$version" | sed -E 's/^v[0-9]+\.([0-9]+)\..*/\1/'); patch=$(echo "$version" | sed -E 's/^v[0-9]+\.[0-9]+\.([0-9]+).*/\1/'); suffix=$(echo "$version" | grep -oE '(-[a-zA-Z0-9]+)?$'); echo "v${major}.${minor}.$((patch + 1))${suffix}")
+  git tag $lt
+  echo $lt
+}
+
+# Kubernetes
+alias kube='kubectl'
+
+# Python
+alias django='python3 manage.py'
+
+# Finviet
+alias restore_dms_report='/Users/doba/FV/backup-database/dms_report.sh'
+alias restore_dms_salesman='/Users/doba/FV/backup-database/dms_salesman.sh'
+alias restore_dms='restore_dms_report & restore_dms_salesman'
+alias ndt="git for-each-ref --sort=-creatordate --format '%(refname:short)' refs/tags | grep -E '^v[0-9]+\.[0-9]+\.[0-9]+-dev$' | head -n 1"

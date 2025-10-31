@@ -1,0 +1,149 @@
+let mapleader = ' '
+
+" open config
+noremap <leader>ec :edit ~/.ideavimrc<cr>
+
+" source config
+noremap <leader>sc :source ~/.ideavimrc<cr>
+
+" redo
+noremap U <C-r>
+
+" map black whole register
+noremap \ "_
+
+" paste over without overwriting default register
+xnoremap p P
+
+" relative line number
+set relativenumber
+
+" sync Vim clipboard with OS clipboard
+set clipboard^=unnamed,unnamedplus
+
+" jump between angle brackets
+set matchpairs+=<:>
+
+" smart line joining
+set ideajoin
+
+" multiple cursor
+set multiple-cursors
+
+" line position
+map <leader>ll $
+map <leader>le ^
+
+" move to the beginning of the next word
+noremap <leader>w [w
+
+" move to the beginning of the previous word
+noremap <leader>b [b
+
+" Split
+map <leader>sv <Action>(SplitVertically)
+map <leader>sh <Action>(SplitHorizontally)
+map <leader>sw <Action>(Unsplit)
+map <leader>sa <Action>(UnsplitAll)
+
+" Navigate Split
+map <C-M-h> <C-w>h
+map <C-M-j> <C-w>j
+map <C-M-k> <C-w>k
+map <C-M-l> <C-w>l
+
+" Navigation
+map <leader>gd <Action>(GotoDeclaration)
+map <leader>gi <Action>(GotoImplementation)
+map <leader>gl <Action>(GotoLine)
+
+" Usage
+map <leader>vs <Action>(ViewSource)
+map <leader>su <Action>(ShowUsages)
+
+" Information
+map <leader>sh <Action>(ShowHoverInfo)
+map <leader>qi <Action>(QuickImplementations)
+map <leader>qd <Action>(QuickTypeDefinition)
+map <leader>fs <Action>(FileStructurePopup)
+map <leader>ca <Action>(ShowIntentionActions)
+
+" Refactoring
+map <leader>rr <Action>(Refactorings.QuickListPopupAction)
+map <leader>rn <Action>(RenameElement)
+map <leader>rm <Action>(ExtractMethod)
+map <leader>rv <Action>(IntroduceVariable)
+map <leader>rf <Action>(IntroduceField)
+map <leader>rs <Action>(ChangeSignature)
+
+" Surround
+map <leader>srw <Action>(SurroundWith)
+
+" Duplicate line
+map <leader>dl <Action>(EditorDuplicateLines)
+
+" Jumping
+map <leader>[ <Action>(MethodUp)
+map <leader>] <Action>(MethodDown)
+map <C-n> <Action>(NextTab)
+map <C-S-N> <Action>(PreviousTab)
+
+" Formating
+map <leader>i <Action>(ReformatCode)
+map <leader>o <Action>(OptimizeImports)
+
+" Program
+map <leader>pr <Action>(ChooseRunConfiguration)
+map <leader>pd <Action>(ChooseDebugConfiguration)
+map <leader>pp :action ManageRecentProjects<CR>
+
+" Git
+map <leader>gb <Action>(Git.Branches)
+map <leader>gc <Action>
+
+" Replace
+vnoremap <C-r> "hy:%s/<C-r>h//gc<left><left><left>
+
+" Selection
+map <leader>vw viw
+map <leader>vl ^v$
+map <leader>va ggvG
+map <leader>{ vi{
+map <leader>v{ va{
+map <leader>( vi(
+map <leader>v( va(
+map <leader>" vi"
+map <leader>v" va"
+map <leader>' vi'
+map <leader>v' va'
+map <leader>< vi<
+map <leader>v< va<
+map <leader>[ vi[
+map <leader>v[ va[
+
+" Change
+map <leader>cw ciw
+map <leader>c{ vi{c
+map <leader>c( vi(c
+map <leader>c< vi<c
+map <leader>c[ vi[c
+map <leader>c" vi"c
+map <leader>c' vi'c
+
+" Delete
+map <leader>dw diw
+map <leader>d{ vi{d
+map <leader>d( vi(d
+map <leader>d< vi<d
+map <leader>d[ vi[d
+map <leader>d" vi"d
+map <leader>d' vi'd
+
+" Scroll
+map <C-j> 2<C-e>
+map <C-k> 2<C-y>
+map <C-h> 2zh
+map <C-l> 2zl
+
+" Debug
+map <leader>td <Action>(ToggleLineBreakpoint)
