@@ -4,7 +4,7 @@ source ~/.zsh_env
 for plugin in zsh-syntax-highlighting zsh-autosuggestions; do
   if [ ! -d "${ZSH_CUSTOM:-~/.oh-my-zsh/custom}/plugins/$plugin" ]; then
     git clone "https://github.com/zsh-users/$plugin.git" \
-      "${ZSH_CUSTOM:-~/.oh-my-zsh/custom}/plugins/$plugin"
+      "$ZSH_CUSTOM/plugins/$plugin"
   fi
 done
 
