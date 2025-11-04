@@ -1,8 +1,8 @@
-source ~/.zsh_env
+source ~/.zshrc.env
 
 # Auto install zsh plugins if missing
 for plugin in zsh-syntax-highlighting zsh-autosuggestions; do
-  if [ ! -d "${ZSH_CUSTOM:-~/.oh-my-zsh/custom}/plugins/$plugin" ]; then
+  if [ ! -d "$ZSH_CUSTOM/plugins/$plugin" ]; then
     git clone "https://github.com/zsh-users/$plugin.git" \
       "$ZSH_CUSTOM/plugins/$plugin"
   fi
@@ -36,4 +36,4 @@ eval "$(zoxide init zsh)"
 eval "$(starship init zsh)"
 
 source <(ng completion script)
-source ~/.zsh_alias
+source ~/.zshrc.alias

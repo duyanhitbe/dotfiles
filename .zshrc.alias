@@ -4,22 +4,14 @@ alias c='clear'
 alias myip="ifconfig | grep -o '192\.168\.68\.[0-9]\+' | grep -v '192\.168\.68\.255'"
 alias mobile_service="echo 'http://$(myip):4301'"
 alias n="nvim"
-alias ls="eza --icons=always"
+alias ls="eza --icons=always -a"
 alias cd="z"
 
+# Load environment from a dotfile
 function load() {
     set -a
     source $1
     set +a
-}
-
-function nvr_open() {
-    if [ -z "$NVIM" ]; then
-      echo "No NVIM server found. Are you running inside Neovim?"
-      exit 1
-    fi
-
-    nvr --servername "$NVIM" --remote "$@"
 }
 
 # JQ
@@ -36,6 +28,15 @@ function q2j() {
        }
        printf "}\n";
      }' | sed 's/+/ /g' | jq .
+}
+
+# Yazi
+function y() {
+	local tmp="$(mktemp -t "yazi-cwd.XXXXXX")" cwd
+	yazi "$@" --cwd-file="$tmp"
+	IFS= read -r -d '' cwd < "$tmp"
+	[ -n "$cwd" ] && [ "$cwd" != "$PWD" ] && builtin cd -- "$cwd"
+	rm -f -- "$tmp"
 }
 
 # Nodejs
@@ -82,8 +83,9 @@ alias gpt='git push --tag'
 alias gpl='git pull'
 alias gc='git checkout'
 alias gb='git branch'
-alias gf='~/projects/CLI/gf/gf.sh'
+alias gs='git status'
 
+# Create a new patch for develop tag
 function gnp() {
   local lt=$(version=$(git lt); major=$(echo "$version" | sed -E 's/^v([0-9]+)\..*/\1/'); minor=$(echo "$version" | sed -E 's/^v[0-9]+\.([0-9]+)\..*/\1/'); patch=$(echo "$version" | sed -E 's/^v[0-9]+\.[0-9]+\.([0-9]+).*/\1/'); suffix=$(echo "$version" | grep -oE '(-[a-zA-Z0-9]+)?$'); echo "v${major}.${minor}.$((patch + 1))${suffix}")
   git tag $lt
