@@ -30,30 +30,30 @@ return {
             dap_configurations = {}
         })
 
-        dap.configurations.go = {
-            {
-				type = "go",
-				name = "Debug",
-				request = "launch",
-				program = "${file}",
-			},
-			{
-				type = "go",
-				name = "Debug Package",
-				request = "launch",
-				program = "${fileDirname}",
-			},
-			{
-				type = "go",
-				name = "Attach to Remote",
-				mode = "remote",
-				request = "attach",
-				host = "127.0.0.1",
-				port = function()
-					return tonumber(vim.fn.input("Port: ", "38697"))
-				end,
-			},
-        }
+			--      dap.configurations.go = {
+			--          {
+			-- 	type = "go",
+			-- 	name = "Debug",
+			-- 	request = "launch",
+			-- 	program = "${file}",
+			-- },
+			-- {
+			-- 	type = "go",
+			-- 	name = "Debug Package",
+			-- 	request = "launch",
+			-- 	program = "${fileDirname}",
+			-- },
+			-- {
+			-- 	type = "go",
+			-- 	name = "Attach to Remote",
+			-- 	mode = "remote",
+			-- 	request = "attach",
+			-- 	host = "127.0.0.1",
+			-- 	port = function()
+			-- 		return tonumber(vim.fn.input("Port: ", "38697"))
+			-- 	end,
+			-- },
+			--      }
 
         -- Setup js-debug adapter
         dap.adapters['pwa-node'] = {
@@ -67,31 +67,31 @@ return {
         }
 
         -- TypeScript/JavaScript configurations
-        for _, language in ipairs({ "typescript", "javascript", "typescriptreact", "javascriptreact" }) do
-            dap.configurations[language] = {
-                {
-                    type = "pwa-node",
-                    request = "launch",
-                    name = "Launch file",
-                    program = "${file}",
-                    cwd = "${workspaceFolder}",
-                },
-                {
-                    type = "pwa-node",
-                    request = "attach",
-                    name = "Attach to Remote",
-                    address = "localhost",
-                    port = function()
-                        return tonumber(vim.fn.input("Port: ", "9229"))
-                    end,
-                    cwd = "${workspaceFolder}",
-                    localRoot = "${workspaceFolder}",
-                    remoteRoot = "${workspaceFolder}",
-                    sourceMaps = true,
-                    skipFiles = { "<node_internals>/**" },
-                }
-            }
-        end
+        -- for _, language in ipairs({ "typescript", "javascript", "typescriptreact", "javascriptreact" }) do
+        --     dap.configurations[language] = {
+        --         {
+        --             type = "pwa-node",
+        --             request = "launch",
+        --             name = "Launch file",
+        --             program = "${file}",
+        --             cwd = "${workspaceFolder}",
+        --         },
+        --         {
+        --             type = "pwa-node",
+        --             request = "attach",
+        --             name = "Attach to Remote",
+        --             address = "localhost",
+        --             port = function()
+        --                 return tonumber(vim.fn.input("Port: ", "9229"))
+        --             end,
+        --             cwd = "${workspaceFolder}",
+        --             localRoot = "${workspaceFolder}",
+        --             remoteRoot = "${workspaceFolder}",
+        --             sourceMaps = true,
+        --             skipFiles = { "<node_internals>/**" },
+        --         }
+        --     }
+        -- end
 
         vim.fn.sign_define("DapBreakpoint", { text = "●", texthl = "DapBreakpoint" })
         vim.fn.sign_define("DapStopped", { text = "→", texthl = "DapStopped" })

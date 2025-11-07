@@ -24,8 +24,15 @@ function resizeRelative(win)
     win:setFrame({x = x, y = y, w = w, h = h})
 end
 
+-- Apps to ignore when auto-resizing
+local ignoredApps = {
+    ["System Settings"] = true,
+    ["Finder"] = true,
+}
+
 appWatcher = hs.application.watcher.new(function(appName, eventType, app)
     if eventType == hs.application.watcher.launched then
+        if ignoredApps[appName] then return end
         hs.timer.doAfter(1, function()
             local win = app:mainWindow()
             if not win then return end

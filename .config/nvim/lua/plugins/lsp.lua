@@ -44,22 +44,20 @@ return {
 			capabilities = capabilities,
 		})
 
+		-- TypeScript LSP
+		vim.lsp.config("rust-analyzer", {
+			capabilities = capabilities,
+		})
+
 		-- ESLint LSP - Shows inline diagnostics
 		vim.lsp.config("eslint", {
 			capabilities = capabilities,
-			on_attach = function(client, bufnr)
-				-- Auto-fix on save
-				vim.api.nvim_create_autocmd("BufWritePre", {
-					buffer = bufnr,
-					command = "EslintFixAll",
-				})
-			end,
 			settings = {
 				workingDirectories = { mode = "auto" },
 			},
 		})
 
 		-- Enable LSP servers
-		vim.lsp.enable({ "lua_ls", "gopls", "ts_ls", "eslint" })
+		vim.lsp.enable({ "lua_ls", "gopls", "ts_ls", "eslint", "rust-analyzer" })
 	end,
 }

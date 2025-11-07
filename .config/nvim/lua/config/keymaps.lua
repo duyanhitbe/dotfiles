@@ -9,6 +9,7 @@ vim.keymap.set("n", "<leader>ww", "<cmd>w<CR>", { silent = true, desc = "Save" }
 vim.keymap.set("n", "<leader>wa", "<cmd>wa<CR>", { silent = true, desc = "Save all" })
 vim.keymap.set("n", "<C-e>", function() cinnamon.scroll("5<C-e>") end, { silent = true, desc = "Smooth scroll down 5 lines" })
 vim.keymap.set("n", "<C-y>", function() cinnamon.scroll("5<C-y>") end, { silent = true, desc = "Smooth scroll up 5 lines" })
+vim.keymap.set({ 'n', 'x' }, '<M-c>', '"+y', { noremap = true, silent = true, desc = 'Copy to clipboard' })
 
 -- Move current line up/down
 vim.keymap.set("n", "<A-j>", ":m .+1<CR>==", { silent = true, desc = "Move line down" })

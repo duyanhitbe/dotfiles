@@ -4,25 +4,12 @@ local wezterm = require("wezterm")
 -- This will hold the configuration.
 local config = wezterm.config_builder()
 
--- This is where you actually apply your config choices
-
 config.font = wezterm.font("JetbrainsMono Nerd Font")
 config.font_size = 19
 
 config.enable_tab_bar = false
 
 config.window_decorations = "RESIZE"
-
---wezterm.on("gui-startup", function(cmd)
---	local screen = wezterm.gui.screens().main
---	local ratio = 0.7
---	local width, height = screen.width * ratio, screen.height * ratio
---	local tab, pane, window = wezterm.mux.spawn_window(cmd or {
---		position = { x = (screen.width - width) / 2, y = (screen.height - height) / 2 },
---	})
-	-- window:gui_window():maximize()
---	window:gui_window():set_inner_size(width, height)
---end)
 
 -- Fix mouse selection disappearing
 config.mouse_bindings = {
@@ -43,6 +30,25 @@ config.mouse_bindings = {
 			window:perform_action(wezterm.action.CompleteSelection("ClipboardAndPrimarySelection"), pane)
 		end),
 	},
+}
+
+-- Binding clipboard to neovim
+config.keys = {
+    {
+        key = 'c',
+        mods = 'CMD',
+        action = wezterm.action_callback(function(window, pane)
+            local process = pane:get_foreground_process_name() or ''
+            if process:match("nvim") then
+                window:perform_action(wezterm.action.SendKey{ key = '"', mods = '' }, pane)
+                window:perform_action(wezterm.action.SendKey{ key = '+', mods = '' }, pane)
+                window:perform_action(wezterm.action.SendKey{ key = 'y', mods = '' }, pane)
+            else
+                window:perform_action(wezterm.action{ CopyTo = 'ClipboardAndPrimarySelection' })
+            end
+        end),
+    },
+    { key = 'v', mods = 'CMD', action = wezterm.action{ PasteFrom = 'Clipboard' } },
 }
 
 config.window_background_opacity = 0.8

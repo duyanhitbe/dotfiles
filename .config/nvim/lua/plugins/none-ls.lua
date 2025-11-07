@@ -31,6 +31,7 @@ return {
 						},
 					}),
 					null_ls.builtins.formatting.goimports,
+					null_ls.builtins.formatting.rustfmt,
 
 					-- Linter - Shows additional diagnostics
 					require("none-ls.diagnostics.eslint_d"),

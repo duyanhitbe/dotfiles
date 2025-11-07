@@ -12,6 +12,7 @@ return {
 					"gopls",
 					"ts_ls",
 					"eslint",
+					"rust-analyzer",
 				},
 			})
 		end,
@@ -25,6 +26,7 @@ return {
 					"prettierd",
 					"goimports",
 					"eslint_d",
+					"rustfmt",
 				},
 			})
 		end,
@@ -33,7 +35,10 @@ return {
 		"jay-babu/mason-nvim-dap.nvim",
 		config = function()
 			require("mason-nvim-dap").setup({
-				ensure_installed = { "delve", "js-debug-adapter" },
+				ensure_installed = {
+					"delve",
+					"js-debug-adapter",
+				},
 				automatic_installation = true,
 			})
 		end,
